@@ -1,0 +1,61 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Django migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# Environment variables
+.env
+
+# Local settings
+local_settings.py
+
+# SQLite database
+db.sqlite3
+
+# Media files
+/media/
+
+# Static files (if you use collectstatic)
+staticfiles/
+
+# Pytest
+.cache/
+*.cover
+
+# Coverage reports
+*.coverage
+coverage.xml
+htmlcov/
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# log files
+*.log
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# Virtual environment
+venv/
+.env/
+env/
+.venv/
+
+# Other files
+*.DS_Store
+*.egg-info/
+*.egg
+dist/
+build/

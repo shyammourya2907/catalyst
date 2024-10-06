@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-2">
+    <h2>Filter Data</h2>
+    <form method="post" action="{% url 'filter_view' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.search_text.label }}
+            <input type="text"
+           name="{{ form.search_text.name }}"
+           value="{{ form.search_text.value|default:'' }}"
+           class="form-control"
+           id="{{ form.search_text.id_for_label }}"
+           placeholder="Please type domain or name of company">
+        </div>
+        <div class="mb-3">
+            {{ form.founded_year.label }}
+            <select name="{{ form.founded_year.name }}" class="form-control" id="{{ form.founded_year.id_for_label }}">
+                <option value="">Select Year</option>
+                {% for value, label in form.founded_year.field.choices %}
+                    <option value="{{ value }}"{% if value == form.founded_year.value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            {{ form.state.label }}
+            <select name="{{ form.state.name }}" class="form-control" id="{{ form.state.id_for_label }}">
+                <option value="">Select State</option>
+                {% for value, label in form.state.field.choices %}
+                    <option value="{{ value }}"{% if value == form.state.value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            {{ form.city.label }}
+            <select name="{{ form.city.name }}" class="form-control" id="{{ form.city.id_for_label }}">
+                <option value="">Select City</option>
+                {% for value, label in form.city.field.choices %}
+                    <option value="{{ value }}"{% if value == form.city.value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            {{ form.county.label }}
+            <select name="{{ form.county.name }}" class="form-control" id="{{ form.county.id_for_label }}">
+                <option value="">Select Country</option>
+                {% for value, label in form.county.field.choices %}
+                    <option value="{{ value }}"{% if value == form.county.value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            {{ form.industry.label }}
+            <select name="{{ form.industry.name }}" class="form-control" id="{{ form.industry.id_for_label }}">
+                <option value="">Select Industry</option>
+                {% for value, label in form.industry.field.choices %}
+                    <option value="{{ value }}"{% if value == form.industry.value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Fetch Records</button>
+<!--        <button type="button" class="btn btn-secondary" onclick="reloadForm()">Reset</button>-->
+    </form>
+    <h3 class="mt-2" id="{{total_results}}">{{ total_results }} found for the query</h3>
+
+<!--    {% if total_results %}-->
+<!--    -->
+<!--    {% endif %}-->
+</div>
+{% endblock %}
+

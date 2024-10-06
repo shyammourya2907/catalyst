@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Uploaded CSV Files</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Uploaded Time</th>
+                    <th>Database Upload Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in csv_files %}
+                    <tr>
+                        <td>{{ file.csv_file.name }}</td>
+                        <td>{{ file.uploaded_at }}</td>
+                        <td>{{ file.database_uploaded_completed|yesno:"Yes,No" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No CSV files uploaded.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+

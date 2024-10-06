@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <div class="content mt-5">
+        <!-- This is where each section content will appear when navigating -->
+        <h3>Welcome {{request.user.username}} to the Catalyst Count</h3>
+        <p>Select an option from the navigation bar to proceed.</p>
+    </div>
+</div>
+{% endblock %}

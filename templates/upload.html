@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock script %}
+{% block content %}
+    <div class="container">
+        <h2 class="my-4">Upload CSV</h2>
+
+        <form id="upload-form" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="file" id="csvFileInput" name="csv_file" accept=".csv" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Upload CSV</button>
+<!--                <button id="download-sample" type="button" class="btn btn-secondary">Download Sample CSV</button>-->
+            </div>
+        </form>
+
+        <!-- Progress bar -->
+        <div class="progress mt-4" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" id="progress-bar"></div>
+        </div>
+
+        <!-- Error messages -->
+        <div class="alert alert-danger mt-4" id="error-message" style="display: none;"></div>
+    </div>
+
+    <script>
+    // Handle the file upload with AJAX
+    $(document).ready(function() {
+        $('#upload-form').on('submit', function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            $.ajax({
+                url: "{% url 'upload_file' %}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                xhr: function() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(event) {
+                        if (event.lengthComputable) {
+                            var percentComplete = Math.round((event.loaded / event.total) * 100);
+                            $('#progress-bar').width(percentComplete + '%');
+                            $('#progress-bar').html(percentComplete + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function(response) {
+                    // Set progress bar to 100%
+                    $('#progress-bar').width('100%').html('100%');
+                    // Delay the alert to show the full progress
+                    setTimeout(function() {
+                        alert('File uploaded successfully.');
+                        $('#progress-bar').width('0%').html('');
+                    }, 500); // Delay for half a second
+                },
+                error: function(response) {
+                    // Set progress bar to 100% to indicate completion
+                    $('#progress-bar').width('100%').html('100%');
+                    // Delay the error message display
+                    setTimeout(function() {
+                        let errorMessage = response.responseJSON.error || 'An error occurred.';
+                        $('#error-message').html(errorMessage).show();
+                        $('#progress-bar').width('0%').html('');
+                    }, 500); // Delay for half a second
+                }
+            });
+        });
+
+        // Handle download sample CSV
+        $('#download-sample').on('click', function() {
+            window.location.href = "{% url 'download_sample' %}";
+        });
+    });
+</script>
+
+{% endblock %}
