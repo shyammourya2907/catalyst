@@ -102,7 +102,7 @@ def process_csv(csv_file_path, csv_file_name):
         data = pd.read_csv(csv_file_path)
 
         # for _, row in data.iterrows():
-        for _, row in data.iloc[:4000].iterrows():
+        for _, row in data.iterrows():
             Company.objects.create(
                 name=row['name'],
                 domain=row['domain'],
