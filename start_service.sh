@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "applying migrations"
+python manage.py makemigrations
+python manage.py migrate
+
 # Start the Django server in the background
 echo "Starting Django server..."
 python manage.py runserver &
